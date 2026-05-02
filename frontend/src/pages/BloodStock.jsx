@@ -7,6 +7,7 @@ const BloodStock = () => {
   const [hospitals, setHospitals] = useState([]);
   const [selectedHospital, setSelectedHospital] = useState('');
   const [showModal, setShowModal] = useState(false);
+  // Form data for adding/updating stock
   const [formData, setFormData] = useState({ hospitalId: '', bloodGroup: '', unitsAvailable: '' });
 
   useEffect(() => {
@@ -20,11 +21,12 @@ const BloodStock = () => {
       setStock([]);
     }
   }, [selectedHospital]);
-
+// Fetch all hospitals from backend
   const fetchHospitals = async () => {
     try {
       const response = await api.get('/hospitals');
       setHospitals(response.data);
+      // Automatically select first hospital
       if (response.data.length > 0) {
         setSelectedHospital(response.data[0]._id);
       }
@@ -32,7 +34,7 @@ const BloodStock = () => {
       console.error('Error fetching hospitals:', error);
     }
   };
-
+// Fetch blood stock for selected hospital
   const fetchStock = async () => {
     try {
       const response = await api.get(`/bloodstock?hospitalId=${selectedHospital}`);
@@ -41,14 +43,16 @@ const BloodStock = () => {
       console.error('Error fetching blood stock:', error);
     }
   };
-
+// Handle form submission (add/update stock)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Validation check
     if (!formData.hospitalId) {
       alert("Please select a hospital");
       return;
     }
     try {
+      // Send data to backend
       await api.post('/bloodstock', formData);
       setShowModal(false);
       setFormData({ hospitalId: '', bloodGroup: '', unitsAvailable: '' });
