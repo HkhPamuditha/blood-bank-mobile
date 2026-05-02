@@ -1,10 +1,14 @@
 Blood Bank Management System
 
+Deployment Details:
+	Backend(Render) - https://bloodbankmobile.onrender.com
+	Frontend(Vercel) - https://bloodbankmobile.vercel.app
+
 A comprehensive, full-stack Blood Bank Management System built using the MERN stack (MongoDB, Express.js, React.js, Node.js). This application streamlines the process of managing blood donations, tracking blood stock, scheduling appointments, and organizing blood camps.
 
 Features
 
-- User Roles & Authentication:** Secure JWT-based authentication with role-based access control (SuperAdmin, Admin, User).
+- User Roles & Authentication: Secure JWT-based authentication with role-based access control (SuperAdmin, Admin, User).
 - Donor Management: Register, view, update, and manage blood donors.
 - Hospital Management: Register hospitals and track their specific blood requests and updates.
 - Blood Stock Tracking: Real-time tracking of available blood inventory by blood groups.
@@ -35,24 +39,24 @@ Project Structure
 The project is structured as a monorepo containing both the frontend and backend code:
 
 Blood Mobile/
-├── backend/          # Express backend application
-│   ├── config/       # Database configuration
-│   ├── controllers/  # Route controllers (auth, users, donors, etc.)
-│   ├── middleware/   # Custom middlewares (auth, error handling)
-│   ├── models/       # Mongoose schemas
-│   ├── routes/       # Express routes
-│   └── server.js     # Entry point for the backend
+├── backend/          Express backend application
+│   ├── config/       Database configuration
+│   ├── controllers/  Route controllers (auth, users, donors, etc.)
+│   ├── middleware/   Custom middlewares (auth, error handling)
+│   ├── models/       Mongoose schemas
+│   ├── routes/        Express routes
+│   └── server.js     Entry point for the backend
 │
-├── frontend/         # React frontend application
-│   ├── public/       # Static assets
-│   ├── src/          # React source code
-│   │   ├── components/ # Reusable UI components
-│   │   ├── pages/      # Application pages (Dashboard, Appointments, etc.)
-│   │   ├── App.jsx     # Main React component
-│   │   └── index.css   # Global Tailwind styles
+├── frontend/         React frontend application
+│   ├── public/       Static assets
+│   ├── src/          React source code
+│   │   ├── components/  Reusable UI components
+│   │   ├── pages/      Application pages (Dashboard, Appointments, etc.)
+│   │   ├── App.jsx     Main React component
+│   │   └── index.css   Global Tailwind styles
 │   └── vite.config.js
 │
-└── package.json      # Root package.json
+└── package.json      Root package.json
 
 Installation & Setup
 
@@ -76,10 +80,10 @@ npm install
 
 Create a .env file in the backend/ directory and add the following variables:
 
-env
-PORT=5000
-MONGO_URI=your_mongodb_connection_string
-JWT_SECRET=your_jwt_secret_key
+.env
+PORT=5001
+MONGO_URL=mongodb+srv://bloodbankmobile:blood59@bloodbankmobile.xj2q6kj.mongodb.net/?appName=Bloodbankmobile
+JWT_SECRET=supersecretjwtkey
 
 Start the backend server:
 
