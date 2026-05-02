@@ -66,6 +66,7 @@ const BloodStock = () => {
 
   return (
     <div>
+      {/* Hospital dropdown + button */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Blood Stock Management</h2>
         <div className="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4 w-full sm:w-auto">
