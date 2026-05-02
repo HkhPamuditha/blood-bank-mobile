@@ -15,14 +15,7 @@ exports.getAppointments = async (req, res) => {
   }
 };
 
-exports.createAppointment = async (req, res) => {
-  try {
-    const appointment = await Appointment.create(req.body);
-    res.status(201).json(appointment);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
-};
+
 
 exports.updateAppointment = async (req, res) => {
   try {
