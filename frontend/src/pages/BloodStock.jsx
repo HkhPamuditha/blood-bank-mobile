@@ -75,7 +75,9 @@ const BloodStock = () => {
             onChange={(e) => setSelectedHospital(e.target.value)}
             className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 bg-white w-full sm:w-auto"
           >
+            {/* If no hospitals */}
             {hospitals.length === 0 && <option value="">No Hospitals Found</option>}
+            {/* Display hospitals */}
             {hospitals.map(hospital => (
               <option key={hospital._id} value={hospital._id}>{hospital.hospitalName}</option>
             ))}
