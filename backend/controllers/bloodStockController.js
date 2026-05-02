@@ -1,0 +1,37 @@
+const BloodStock = require('../models/BloodStock');
+
+exports.getBloodStock = async (req, res) => {
+  try {
+    const { hospitalId } = req.query;
+    let query = {};
+    if (hospitalId) {
+      query.hospitalId = hospitalId;
+    }
+    const stock = await BloodStock.find(query).populate('hospitalId', 'hospitalName');
+    res.json(stock);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+exports.updateBloodStock = async (req, res) => {
+  try {
+    const { hospitalId, bloodGroup, unitsAvailable } = req.body;
+    
+    if (!hospitalId) {
+      return res.status(400).json({ message: 'hospitalId is required' });
+    }
+
+    let stock = await BloodStock.findOne({ hospitalId, bloodGroup });
+
+    if (stock) {
+      stock.unitsAvailable = unitsAvailable;
+      await stock.save();
+    } else {
+      stock = await BloodStock.create({ hospitalId, bloodGroup, unitsAvailable });
+    }
+    res.json(stock);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+};
