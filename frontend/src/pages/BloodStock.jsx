@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../services/api';
 
 const BloodStock = () => {
+  // State to store blood stock data
   const [stock, setStock] = useState([]);
   const [hospitals, setHospitals] = useState([]);
   const [selectedHospital, setSelectedHospital] = useState('');
