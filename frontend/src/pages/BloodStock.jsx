@@ -94,7 +94,9 @@ const BloodStock = () => {
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {/* Loop through all blood groups */}
         {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map((bg) => {
+      // Find stock for current blood group
           const item = stock.find(s => s.bloodGroup === bg);
+      // If not found, show 0
           const units = item ? item.unitsAvailable : 0;
           return (
             <div key={bg} className="bg-white rounded-lg shadow p-6 flex flex-col items-center justify-center border-t-4 border-red-500">
