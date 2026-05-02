@@ -28,12 +28,5 @@ exports.updateBloodCamp = async (req, res) => {
   }
 };
 
-exports.deleteBloodCamp = async (req, res) => {
-  try {
-    const bloodCamp = await BloodCamp.findByIdAndDelete(req.params.id);
-    if (!bloodCamp) return res.status(404).json({ message: 'Blood Camp not found' });
-    res.json({ message: 'Blood Camp deleted successfully' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+
 };
