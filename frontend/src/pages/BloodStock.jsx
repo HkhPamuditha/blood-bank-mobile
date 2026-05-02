@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import api from '../services/api';
 
 const BloodStock = () => {
+  // State to store blood stock data
   const [stock, setStock] = useState([]);
   const [hospitals, setHospitals] = useState([]);
   const [selectedHospital, setSelectedHospital] = useState('');
@@ -19,11 +20,12 @@ const BloodStock = () => {
       setStock([]);
     }
   }, [selectedHospital]);
-
+ // Fetch all hospitals from backend
   const fetchHospitals = async () => {
     try {
       const response = await api.get('/hospitals');
       setHospitals(response.data);
+      // Automatically select first hospital
       if (response.data.length > 0) {
         setSelectedHospital(response.data[0]._id);
       }
@@ -31,7 +33,7 @@ const BloodStock = () => {
       console.error('Error fetching hospitals:', error);
     }
   };
-
+// Fetch blood stock for selected hospital
   const fetchStock = async () => {
     try {
       const response = await api.get(`/bloodstock?hospitalId=${selectedHospital}`);
@@ -40,9 +42,10 @@ const BloodStock = () => {
       console.error('Error fetching blood stock:', error);
     }
   };
-
+// Handle form submission (add/update stock)
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Validation check
     if (!formData.hospitalId) {
       alert("Please select a hospital");
       return;
@@ -85,6 +88,7 @@ const BloodStock = () => {
 
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         {['A+', 'A-', 'B+', 'B-', 'AB+', 'AB-', 'O+', 'O-'].map((bg) => {
+      // Find stock for current blood group
           const item = stock.find(s => s.bloodGroup === bg);
           const units = item ? item.unitsAvailable : 0;
           return (
