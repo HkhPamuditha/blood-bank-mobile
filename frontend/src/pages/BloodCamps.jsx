@@ -2,7 +2,37 @@ import { useState, useEffect } from 'react';
 import api from '../services/api';
 import { Plus, Edit2, Trash2, Calendar, X } from 'lucide-react';
 
+const BloodCamps = () => {
+  const [bloodCamps, setBloodCamps] = useState([]);
+  const [hospitals, setHospitals] = useState([]);
+  const [showModal, setShowModal] = useState(false);
+  const [showAppointmentsModal, setShowAppointmentsModal] = useState(false);
+  const [selectedCampAppointments, setSelectedCampAppointments] = useState([]);
+  const [formData, setFormData] = useState({ name: '', location: '', date: '', time: '', hospitalId: '' });
+  const [editId, setEditId] = useState(null);
 
+  useEffect(() => {
+    fetchBloodCamps();
+    fetchHospitals();
+  }, []);
+
+  const fetchBloodCamps = async () => {
+    try {
+      const response = await api.get('/bloodcamps');
+      setBloodCamps(response.data);
+    } catch (error) {
+      console.error('Error fetching blood camps:', error);
+    }
+  };
+
+  const fetchHospitals = async () => {
+    try {
+      const response = await api.get('/hospitals');
+      setHospitals(response.data);
+    } catch (error) {
+      console.error('Error fetching hospitals:', error);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
