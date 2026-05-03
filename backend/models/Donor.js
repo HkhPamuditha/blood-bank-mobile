@@ -10,4 +10,3 @@ const donorSchema = new mongoose.Schema({
   address: { type: String, required: true },
 }, { timestamps: true });
 
-module.exports = mongoose.model('Donor', donorSchema);
