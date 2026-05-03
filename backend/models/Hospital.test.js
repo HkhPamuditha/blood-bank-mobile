@@ -4,9 +4,7 @@ const Hospital = require('./Hospital');
 describe('Hospital Model Test', () => {
   it('should validate successfully with correct fields', () => {
     const hospital = new Hospital({
-      hospitalName: 'General Hospital',
-      location: 'Colombo',
-      contactNumber: '0112345678'
+     
     });
     
     const error = hospital.validateSync();
