@@ -18,7 +18,8 @@ const Admins = () => {
   useEffect(() => {
     fetchAdmins();
   }, []);
-
+  
+// Fetch all admins from backend
   const fetchAdmins = async () => {
     try {
       const response = await api.get('/users');
@@ -27,7 +28,7 @@ const Admins = () => {
       console.error('Error fetching admins:', error);
     }
   };
-
+// Handle form submit (Add Admin)
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
@@ -40,7 +41,7 @@ const Admins = () => {
       setError(err.response?.data?.message || 'Error adding admin');
     }
   };
-
+// Delete admin by ID
   const handleDelete = async (id) => {
     if (window.confirm('Are you sure you want to delete this admin?')) {
       try {
