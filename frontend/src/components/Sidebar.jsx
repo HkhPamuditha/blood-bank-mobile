@@ -7,7 +7,14 @@ const Sidebar = ({ isOpen, setIsOpen }) => {
   const location = useLocation();
   const { user } = useContext(AuthContext);
 
- 
+  const navItems = [
+    { name: 'Dashboard', path: '/', icon: Home },
+    { name: 'Donors', path: '/donors', icon: Users },
+    { name: 'Blood Stock', path: '/bloodstock', icon: Droplet },
+    { name: 'Hospitals', path: '/hospitals', icon: Building2 },
+    { name: 'Blood Camps', path: '/bloodcamps', icon: Activity },
+    { name: 'Appointments', path: '/appointments', icon: Calendar },
+  ];
 
   if (user && user.role === 'SuperAdmin') {
     navItems.push({ name: 'Admins', path: '/admins', icon: ShieldCheck });
