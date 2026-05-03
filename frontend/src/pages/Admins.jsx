@@ -8,6 +8,7 @@ const Admins = () => {
   const [admins, setAdmins] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
+   // Form data for creating new admin
   const [formData, setFormData] = useState({
     name: '',
     email: '',
