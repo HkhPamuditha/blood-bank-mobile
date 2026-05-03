@@ -6,10 +6,7 @@ exports.getDonors = async (req, res) => {
     const donors = await Donor.find(query);
     res.json(donors);
   } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-};
-
+    
 exports.createDonor = async (req, res) => {
   try {
     const donor = await Donor.create(req.body);
