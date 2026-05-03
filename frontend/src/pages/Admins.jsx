@@ -4,6 +4,7 @@ import { AuthContext } from '../context/AuthContext';
 import { Plus, Trash2, X, Shield, ShieldAlert } from 'lucide-react';
 
 const Admins = () => {
+  // State to store all admins
   const [admins, setAdmins] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const { user: currentUser } = useContext(AuthContext);
