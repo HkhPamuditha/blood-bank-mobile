@@ -13,10 +13,7 @@ const Donors = () => {
   const [dob, setDob] = useState('');
   const { user } = useContext(AuthContext);
 
-  useEffect(() => {
-    fetchDonors();
-  }, [searchTerm]);
-
+  
   const fetchDonors = async () => {
     try {
       const url = searchTerm ? `/donors?nic=${searchTerm}` : '/donors';
