@@ -4,6 +4,6 @@ const { getHospitals, createHospital, updateHospital, deleteHospital } = require
 const { protect } = require('../middleware/authMiddleware');
 
 router.route('/').get(getHospitals).post(protect, createHospital);
-router.route('/:id').put(protect, updateHospital).delete(protect, deleteHospital);
+
 
 module.exports = router;
