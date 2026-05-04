@@ -19,11 +19,13 @@ describe('BloodStock Model Test', () => {
     const error = bloodStock.validateSync();
     
     expect(error).toBeDefined();
+    // Check specific field errors
     expect(error.errors.hospitalId).toBeDefined();
     expect(error.errors.bloodGroup).toBeDefined();
   });
 
   it('should have default unitsAvailable as 0', () => {
+    // Create object without unitsAvailable
     const bloodStock = new BloodStock({
       hospitalId: new mongoose.Types.ObjectId(),
       bloodGroup: 'AB+'
