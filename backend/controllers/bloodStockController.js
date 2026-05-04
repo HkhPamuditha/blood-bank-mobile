@@ -21,12 +21,14 @@ exports.updateBloodStock = async (req, res) => {
     const { hospitalId, bloodGroup, unitsAvailable } = req.body;
     
     if (!hospitalId) {
+      // Check if hospitalId is missing
       return res.status(400).json({ message: 'hospitalId is required' });
     }
 
     let stock = await BloodStock.findOne({ hospitalId, bloodGroup });
 
     if (stock) {
+      // If stock exists → update units
       stock.unitsAvailable = unitsAvailable;
       await stock.save();
     } else {
