@@ -2,8 +2,6 @@ import { useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import { LogOut, User, Menu } from 'lucide-react';
 
-function Header({ toggleSidebar }) {
-  const { user, logout } = useContext(AuthContext);
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
