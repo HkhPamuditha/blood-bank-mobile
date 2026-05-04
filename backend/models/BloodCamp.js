@@ -4,7 +4,8 @@ const bloodCampSchema = new mongoose.Schema({
   name: { type: String, required: true },
   location: { type: String, required: true },
   date: { type: Date, required: true },
-  time: { type: String, required: true },
+  startTime: { type: String, required: true },
+  endTime: { type: String, required: true },
   hospitalId: { type: mongoose.Schema.Types.ObjectId, ref: 'Hospital', required: true },
 }, { timestamps: true });
 

@@ -3,7 +3,17 @@ const BloodCamp = require('../models/BloodCamp');
 exports.getBloodCamps = async (req, res) => {
   try {
     const bloodCamps = await BloodCamp.find().sort({ date: 1 });
-    res.json(bloodCamps);
+    const currentDate = new Date();
+    
+    const validCamps = bloodCamps.filter(camp => {
+      if (!camp.endTime) return true;
+      const campDate = new Date(camp.date);
+      const [hours, minutes] = camp.endTime.split(':');
+      campDate.setHours(parseInt(hours), parseInt(minutes), 0, 0);
+      return campDate > currentDate;
+    });
+
+    res.json(validCamps);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from 'react';
 import api from '../services/api';
-import { Plus, Edit2, Trash2, Search } from 'lucide-react';
+import { Plus, Edit2, Trash2, Search, FileText, Upload, CheckCircle, XCircle } from 'lucide-react';
 import { AuthContext } from '../context/AuthContext';
 
 const Donors = () => {
@@ -69,6 +69,30 @@ const Donors = () => {
     setShowModal(true);
   };
 
+  const handleFileUpload = async (id, file) => {
+    if (!file) return;
+    const uploadData = new FormData();
+    uploadData.append('medicalReport', file);
+    try {
+      await api.post(`/donors/${id}/upload-report`, uploadData, {
+        headers: { 'Content-Type': 'multipart/form-data' }
+      });
+      fetchDonors();
+    } catch (error) {
+      console.error('Error uploading report:', error);
+      alert('Failed to upload report');
+    }
+  };
+
+  const handleStatusChange = async (id, newStatus) => {
+    try {
+      await api.put(`/donors/${id}`, { status: newStatus });
+      fetchDonors();
+    } catch (error) {
+      console.error(`Error updating status to ${newStatus}:`, error);
+    }
+  };
+
   const confirmDelete = async (id) => {
     try {
       await api.delete(`/donors/${id}`);
@@ -109,6 +133,7 @@ const Donors = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Blood Group</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Contact</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
               <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
             </tr>
           </thead>
@@ -128,7 +153,35 @@ const Donors = () => {
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                   {donor.contactNumber}
                 </td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                    donor.status === 'Eligible' ? 'bg-green-100 text-green-800' :
+                    donor.status === 'Not Eligible' ? 'bg-red-100 text-red-800' :
+                    'bg-yellow-100 text-yellow-800'
+                  }`}>
+                    {donor.status || 'Pending'}
+                  </span>
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  {!donor.medicalReport && (
+                    <label className="cursor-pointer text-indigo-600 hover:text-indigo-900 mr-4 inline-flex items-center" title="Upload Medical Report">
+                      <Upload className="h-5 w-5" />
+                      <input type="file" className="hidden" accept=".pdf,image/*" onChange={(e) => handleFileUpload(donor._id, e.target.files[0])} />
+                    </label>
+                  )}
+                  {donor.medicalReport && (
+                    <>
+                      <a href={`http://localhost:5001${donor.medicalReport}`} target="_blank" rel="noreferrer" className="text-blue-600 hover:text-blue-900 mr-4 inline-flex items-center" title="View Medical Report">
+                        <FileText className="h-5 w-5" />
+                      </a>
+                      <button onClick={() => handleStatusChange(donor._id, 'Eligible')} className="text-green-600 hover:text-green-900 mr-3 inline-flex items-center" title="Mark as Eligible">
+                        <CheckCircle className="h-5 w-5" />
+                      </button>
+                      <button onClick={() => handleStatusChange(donor._id, 'Not Eligible')} className="text-orange-600 hover:text-orange-900 mr-4 inline-flex items-center" title="Mark as Not Eligible">
+                        <XCircle className="h-5 w-5" />
+                      </button>
+                    </>
+                  )}
                   <button onClick={() => handleEdit(donor)} className="text-indigo-600 hover:text-indigo-900 mr-4">
                     <Edit2 className="h-5 w-5" />
                   </button>
@@ -142,7 +195,7 @@ const Donors = () => {
             ))}
             {donors.length === 0 && (
               <tr>
-                <td colSpan="4" className="px-6 py-4 text-center text-gray-500">No donors found</td>
+                <td colSpan="5" className="px-6 py-4 text-center text-gray-500">No donors found</td>
               </tr>
             )}
           </tbody>

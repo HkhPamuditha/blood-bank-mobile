@@ -38,3 +38,22 @@ exports.deleteDonor = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+exports.uploadReport = async (req, res) => {
+  try {
+    const donor = await Donor.findById(req.params.id);
+    if (!donor) return res.status(404).json({ message: 'Donor not found' });
+
+    if (!req.file) {
+      return res.status(400).json({ message: 'No file uploaded' });
+    }
+
+    const reportUrl = `/uploads/reports/${req.file.filename}`;
+    donor.medicalReport = reportUrl;
+    await donor.save();
+
+    res.json(donor);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};

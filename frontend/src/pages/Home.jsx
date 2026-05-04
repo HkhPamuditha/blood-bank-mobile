@@ -226,7 +226,7 @@ const Home = () => {
                       </p>
                       <p className="text-gray-600 text-sm flex items-center mt-1">
                         <Calendar className="h-4 w-4 mr-1 text-gray-400" />
-                        {new Date(camp.date).toLocaleDateString()} at {camp.time}
+                        {new Date(camp.date).toLocaleDateString()} at {camp.startTime ? `${camp.startTime} - ${camp.endTime}` : camp.time}
                       </p>
                     </div>
                     <button

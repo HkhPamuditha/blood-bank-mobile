@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import api from '../services/api';
-import { Plus, Edit2, Trash2, Calendar, X } from 'lucide-react';
+import { Plus, Edit2, Trash2, Calendar, X, Clock } from 'lucide-react';
 
 const BloodCamps = () => {
   const [bloodCamps, setBloodCamps] = useState([]);
@@ -8,8 +8,10 @@ const BloodCamps = () => {
   const [showModal, setShowModal] = useState(false);
   const [showAppointmentsModal, setShowAppointmentsModal] = useState(false);
   const [selectedCampAppointments, setSelectedCampAppointments] = useState([]);
-  const [formData, setFormData] = useState({ name: '', location: '', date: '', time: '', hospitalId: '' });
+  const [formData, setFormData] = useState({ name: '', location: '', date: '', startTime: '', endTime: '', hospitalId: '' });
   const [editId, setEditId] = useState(null);
+  const startTimeRef = useRef(null);
+  const endTimeRef = useRef(null);
 
   useEffect(() => {
     fetchBloodCamps();
@@ -43,11 +45,12 @@ const BloodCamps = () => {
         await api.post('/bloodcamps', formData);
       }
       setShowModal(false);
-      setFormData({ name: '', location: '', date: '', time: '', hospitalId: '' });
+      setFormData({ name: '', location: '', date: '', startTime: '', endTime: '', hospitalId: '' });
       setEditId(null);
       fetchBloodCamps();
     } catch (error) {
       console.error('Error saving blood camp:', error);
+      alert(error.response?.data?.message || 'Error saving blood camp. Please try again.');
     }
   };
 
@@ -56,7 +59,8 @@ const BloodCamps = () => {
       name: camp.name,
       location: camp.location,
       date: new Date(camp.date).toISOString().split('T')[0],
-      time: camp.time,
+      startTime: camp.startTime,
+      endTime: camp.endTime,
       hospitalId: camp.hospitalId || ''
     });
     setEditId(camp._id);
@@ -90,7 +94,7 @@ const BloodCamps = () => {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-6">
         <h2 className="text-xl sm:text-2xl font-bold text-gray-800">Blood Camps</h2>
         <button
-          onClick={() => { setEditId(null); setFormData({ name: '', location: '', date: '', time: '', hospitalId: '' }); setShowModal(true); }}
+          onClick={() => { setEditId(null); setFormData({ name: '', location: '', date: '', startTime: '', endTime: '', hospitalId: '' }); setShowModal(true); }}
           className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 flex items-center transition-colors w-full sm:w-auto justify-center"
         >
           <Plus className="h-5 w-5 mr-2" /> Add Blood Camp
@@ -117,7 +121,7 @@ const BloodCamps = () => {
                   <div className="text-sm text-gray-500">{camp.location}</div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {new Date(camp.date).toLocaleDateString()} at {camp.time}
+                  {new Date(camp.date).toLocaleDateString()} at {camp.startTime ? `${camp.startTime} - ${camp.endTime}` : camp.time}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <button onClick={() => handleViewAppointments(camp._id)} className="text-purple-600 hover:text-purple-900 mr-4" title="View Appointments">
@@ -157,7 +161,32 @@ const BloodCamps = () => {
                 </select>
                 <input required type="text" placeholder="Location" value={formData.location} onChange={e => setFormData({...formData, location: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
                 <input required type="date" min={new Date().toISOString().split('T')[0]} value={formData.date} onChange={e => setFormData({...formData, date: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
-                <input required type="time" value={formData.time} onChange={e => setFormData({...formData, time: e.target.value})} className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500" />
+                <div className="flex space-x-2">
+                  <div className="w-1/2">
+                    <label className="block text-xs text-gray-500 mb-1">Start Time</label>
+                    <div className="relative group">
+                      <input 
+                        type="time" 
+                        value={formData.startTime} 
+                        onChange={e => setFormData({...formData, startTime: e.target.value})} 
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-0 [&::-webkit-calendar-picker-indicator]:w-10 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:z-20" 
+                      />
+                      <Clock className="absolute right-2.5 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-red-500 z-10 pointer-events-none" />
+                    </div>
+                  </div>
+                  <div className="w-1/2">
+                    <label className="block text-xs text-gray-500 mb-1">End Time</label>
+                    <div className="relative group">
+                      <input 
+                        type="time" 
+                        value={formData.endTime} 
+                        onChange={e => setFormData({...formData, endTime: e.target.value})} 
+                        className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-red-500 [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:right-0 [&::-webkit-calendar-picker-indicator]:w-10 [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:opacity-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:z-20" 
+                      />
+                      <Clock className="absolute right-2.5 top-1/2 transform -translate-y-1/2 h-4 w-4 text-gray-400 group-hover:text-red-500 z-10 pointer-events-none" />
+                    </div>
+                  </div>
+                </div>
                 <div className="flex justify-end space-x-3 mt-6">
                   <button type="button" onClick={() => setShowModal(false)} className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition-colors">Cancel</button>
                   <button type="submit" className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-colors">Save</button>

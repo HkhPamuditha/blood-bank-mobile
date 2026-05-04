@@ -12,7 +12,12 @@ app.use(cors());
 app.use(express.json());
 app.use((req, res, next) => { res.on("finish", () => { console.log(`[REQ] ${req.method} ${req.originalUrl} - ${res.statusCode}`); }); next(); });
 
+const path = require('path');
+
 app.use(express.urlencoded({ extended: false }));
+
+// Serve uploaded files statically
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 app.use('/api', routes);
 
