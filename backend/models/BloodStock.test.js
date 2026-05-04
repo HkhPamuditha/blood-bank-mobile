@@ -13,7 +13,7 @@ describe('BloodStock Model Test', () => {
     const error = bloodStock.validateSync();
     expect(error).toBeUndefined();
   });
-
+// ❌ Test 2: Missing required fields
   it('should fail validation if required fields are missing', () => {
     const bloodStock = new BloodStock({});
     const error = bloodStock.validateSync();
