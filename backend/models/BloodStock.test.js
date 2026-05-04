@@ -1,3 +1,4 @@
+// Import mongoose (used to create ObjectId for testing)
 const mongoose = require('mongoose');
 const BloodStock = require('./BloodStock');
 
@@ -27,7 +28,7 @@ describe('BloodStock Model Test', () => {
       hospitalId: new mongoose.Types.ObjectId(),
       bloodGroup: 'AB+'
     });
-    
+    // Expect default value = 0
     expect(bloodStock.unitsAvailable).toBe(0);
   });
 });
