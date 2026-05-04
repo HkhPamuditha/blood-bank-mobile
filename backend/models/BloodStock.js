@@ -1,3 +1,4 @@
+// Import mongoose (used to define schema and interact with MongoDB)
 const mongoose = require('mongoose');
 
 const bloodStockSchema = new mongoose.Schema({
@@ -8,5 +9,5 @@ const bloodStockSchema = new mongoose.Schema({
 
 // Ensure unique blood group per hospital
 bloodStockSchema.index({ hospitalId: 1, bloodGroup: 1 }, { unique: true });
-
+// Export model so it can be used in controllers
 module.exports = mongoose.model('BloodStock', bloodStockSchema);
