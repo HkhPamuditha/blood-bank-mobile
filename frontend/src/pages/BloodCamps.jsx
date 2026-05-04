@@ -190,30 +190,7 @@ const BloodCamps = () => {
                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Status</th>
                       </tr>
                     </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                      {selectedCampAppointments.map((apt) => (
-                        <tr key={apt._id}>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <div className="text-sm font-medium text-gray-900">{apt.donorId?.name || apt.applicantName}</div>
-                            <div className="text-xs text-gray-500">NIC: {apt.donorId?.nic || apt.nic}</div>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{apt.contactNumber}</td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
-                              {apt.donorId?.bloodGroup || apt.bloodGroup}
-                            </span>
-                          </td>
-                          <td className="px-6 py-4 whitespace-nowrap">
-                            <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                              apt.status === 'Approved' ? 'bg-green-100 text-green-800' : 
-                              apt.status === 'Rejected' ? 'bg-red-100 text-red-800' : 'bg-yellow-100 text-yellow-800'
-                            }`}>
-                              {apt.status}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
+
                   </table>
                 </div>
               ) : (
