@@ -135,7 +135,7 @@ const Home = () => {
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-red-50 via-white to-white opacity-70"></div>
         </div>
-        
+
         <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-gray-900 mb-8 leading-tight">
             Every Drop <span className="text-transparent bg-clip-text bg-gradient-to-r from-red-600 to-red-400">Counts.</span>
@@ -226,7 +226,7 @@ const Home = () => {
                       </p>
                       <p className="text-gray-600 text-sm flex items-center mt-1">
                         <Calendar className="h-4 w-4 mr-1 text-gray-400" />
-                        {new Date(camp.date).toLocaleDateString()} at {camp.time}
+                        {new Date(camp.date).toLocaleDateString()} at {camp.startTime ? `${camp.startTime} - ${camp.endTime}` : camp.time}
                       </p>
                     </div>
                     <button
@@ -257,7 +257,7 @@ const Home = () => {
                 <X className="h-6 w-6" />
               </button>
             </div>
-            
+
             {message && (
               <div className={`mb-4 p-3 rounded text-sm ${message.includes('Error') ? 'bg-red-50 text-red-600 border border-red-200' : 'bg-green-50 text-green-600 border border-green-200'}`}>
                 {message}
@@ -265,19 +265,19 @@ const Home = () => {
             )}
 
             <form onSubmit={handleSubmit} className="space-y-4">
-              <input required type="text" placeholder="Full Name" value={formData.applicantName} onChange={e => setFormData({...formData, applicantName: e.target.value})} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
-              <input required type="text" placeholder="NIC Number" value={formData.nic} onChange={e => setFormData({...formData, nic: e.target.value})} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
-              
+              <input required type="text" placeholder="Full Name" value={formData.applicantName} onChange={e => setFormData({ ...formData, applicantName: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
+              <input required type="text" placeholder="NIC Number" value={formData.nic} onChange={e => setFormData({ ...formData, nic: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
+
               <div className="flex space-x-3">
                 <div className="w-1/2">
                   <label className="block text-xs text-gray-500 mb-1">Date of Birth (Must be 18+)</label>
-                  <input 
-                    type="date" 
-                    required 
+                  <input
+                    type="date"
+                    required
                     max={new Date(new Date().setFullYear(new Date().getFullYear() - 18)).toISOString().split('T')[0]}
-                    value={dob} 
-                    onChange={handleDobChange} 
-                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" 
+                    value={dob}
+                    onChange={handleDobChange}
+                    className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
                   />
                 </div>
                 <div className="w-1/2">
@@ -287,13 +287,13 @@ const Home = () => {
               </div>
 
               <div className="flex space-x-3">
-                <select required value={formData.gender} onChange={e => setFormData({...formData, gender: e.target.value})} className="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                <select required value={formData.gender} onChange={e => setFormData({ ...formData, gender: e.target.value })} className="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
                   <option value="">Select Gender</option>
                   <option value="Male">Male</option>
                   <option value="Female">Female</option>
                   <option value="Other">Other</option>
                 </select>
-                <select required value={formData.bloodGroup} onChange={e => setFormData({...formData, bloodGroup: e.target.value})} className="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                <select required value={formData.bloodGroup} onChange={e => setFormData({ ...formData, bloodGroup: e.target.value })} className="w-1/2 px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
                   <option value="">Blood Group</option>
                   <option value="A+">A+</option>
                   <option value="A-">A-</option>
@@ -306,26 +306,26 @@ const Home = () => {
                 </select>
               </div>
 
-              <input 
-                required 
-                type="tel" 
-                pattern="[0-9]{10}" 
-                maxLength="10" 
-                title="Please enter exactly 10 digits" 
-                placeholder="Contact Number (10 digits)" 
-                value={formData.contactNumber} 
-                onChange={e => setFormData({...formData, contactNumber: e.target.value.replace(/\D/g, '')})} 
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" 
+              <input
+                required
+                type="tel"
+                pattern="[0-9]{10}"
+                maxLength="10"
+                title="Please enter exactly 10 digits"
+                placeholder="Contact Number (10 digits)"
+                value={formData.contactNumber}
+                onChange={e => setFormData({ ...formData, contactNumber: e.target.value.replace(/\D/g, '') })}
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500"
               />
-              <input required type="text" placeholder="Address" value={formData.address} onChange={e => setFormData({...formData, address: e.target.value})} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
-              
+              <input required type="text" placeholder="Address" value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500" />
+
               {selectedCamp ? (
                 <div className="w-full">
                   <label className="block text-xs text-gray-500 mb-1">Selected Blood Camp</label>
                   <input type="text" value={selectedCamp.name + ' (' + selectedCamp.location + ')'} readOnly className="w-full px-4 py-2 border border-gray-300 bg-gray-50 rounded-lg text-gray-600 cursor-not-allowed font-medium" />
                 </div>
               ) : (
-                <select required value={formData.hospitalId} onChange={e => setFormData({...formData, hospitalId: e.target.value})} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
+                <select required value={formData.hospitalId} onChange={e => setFormData({ ...formData, hospitalId: e.target.value })} className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-red-500">
                   <option value="">Select Hospital</option>
                   {hospitals.map(h => <option key={h._id} value={h._id}>{h.hospitalName} ({h.location})</option>)}
                 </select>
@@ -333,14 +333,14 @@ const Home = () => {
 
               <div className="w-full">
                 <label className="block text-xs text-gray-500 mb-1">Appointment Date</label>
-                <input 
-                  required 
-                  type="date" 
+                <input
+                  required
+                  type="date"
                   min={new Date().toISOString().split('T')[0]}
-                  value={formData.appointmentDate} 
-                  onChange={e => setFormData({...formData, appointmentDate: e.target.value})} 
-                  readOnly={!!selectedCamp} 
-                  className={`w-full px-4 py-2 border border-gray-300 rounded-lg ${selectedCamp ? 'bg-gray-50 text-gray-600 cursor-not-allowed' : 'focus:ring-2 focus:ring-red-500 focus:border-red-500'}`} 
+                  value={formData.appointmentDate}
+                  onChange={e => setFormData({ ...formData, appointmentDate: e.target.value })}
+                  readOnly={!!selectedCamp}
+                  className={`w-full px-4 py-2 border border-gray-300 rounded-lg ${selectedCamp ? 'bg-gray-50 text-gray-600 cursor-not-allowed' : 'focus:ring-2 focus:ring-red-500 focus:border-red-500'}`}
                 />
               </div>
 
