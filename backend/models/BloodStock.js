@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 
 const bloodStockSchema = new mongoose.Schema({
   hospitalId: { type: mongoose.Schema.Types.ObjectId, ref: 'Hospital', required: true },
+  // Blood group (e.g., A+, B-, O+)
   bloodGroup: { type: String, required: true },
+  // Number of blood units available
   unitsAvailable: { type: Number, required: true, default: 0 },
 }, { timestamps: true });
 
