@@ -17,6 +17,7 @@ exports.getBloodStock = async (req, res) => {
 
 exports.updateBloodStock = async (req, res) => {
   try {
+    // If not exists → create new record
     const { hospitalId, bloodGroup, unitsAvailable } = req.body;
     
     if (!hospitalId) {
@@ -31,7 +32,7 @@ exports.updateBloodStock = async (req, res) => {
     } else {
       stock = await BloodStock.create({ hospitalId, bloodGroup, unitsAvailable });
     }
-    
+    // Send updated or newly created stock
     res.json(stock);
   } catch (error) {
     // If validation or other error occurs
