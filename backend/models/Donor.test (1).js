@@ -17,7 +17,9 @@ describe('Donor Model Test', () => {
     expect(error).toBeUndefined();
   });
 
-  
+  it('should fail validation if required fields are missing', () => {
+    const donor = new Donor({});
+    const error = donor.validateSync();
     
     expect(error).toBeDefined();
     expect(error.errors.name).toBeDefined();
