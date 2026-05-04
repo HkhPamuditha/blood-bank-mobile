@@ -281,7 +281,7 @@ const Home = () => {
                   />
                 </div>
                 <div className="w-1/2">
-                  <label className="block text-xs text-gray-500 mb-1">Calculated Age</label>
+                  <label className="block text-xs text-gray-500 mb-1">Age</label>
                   <input required type="number" placeholder="Age" value={formData.age} readOnly className="w-full px-4 py-2 border border-gray-300 bg-gray-50 rounded-lg text-gray-500 cursor-not-allowed" />
                 </div>
               </div>
