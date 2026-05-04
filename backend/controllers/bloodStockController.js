@@ -1,3 +1,4 @@
+// Import BloodStock model
 const BloodStock = require('../models/BloodStock');
 
 exports.getBloodStock = async (req, res) => {
@@ -30,8 +31,10 @@ exports.updateBloodStock = async (req, res) => {
     } else {
       stock = await BloodStock.create({ hospitalId, bloodGroup, unitsAvailable });
     }
+    
     res.json(stock);
   } catch (error) {
+    // If validation or other error occurs
     res.status(400).json({ message: error.message });
   }
 };
